@@ -13,11 +13,26 @@ if($conn){
 
 
 
-// if(isset($_REQUEST['createUser'])){
-//     echo "here";
-//     $createQuery = "INSERT INTO user(`name`,`email`,`phone`,`image`) VALUES ('a','a','a','a')";
-//     mysqli_query($conn,$createQuery);
-// }
+if(isset($_REQUEST['createUser'])){
+    
+    $name = mysqli_real_escape_string($conn,$_REQUEST['name']);
+    $email = mysqli_real_escape_string($conn,$_REQUEST['email']);
+    $phone = mysqli_real_escape_string($conn,$_REQUEST['phone']);
+   
+
+    // image file 
+    $imageName = $_FILES['image']['tmp_name'];
+
+    // image upload
+    $uploadDir = 'userImages/';
+    $targetFile = $uploadDir.$_FILES['image']['name'];
+
+    move_uploaded_file($imageName,$targetFile);
+
+
+    $createQuery = "INSERT INTO user(`name`,`email`,`phone`,`image`) VALUES ('$name','$email','$phone','$targetFile')";
+    mysqli_query($conn,$createQuery);
+}
 
 
 
@@ -44,7 +59,7 @@ if($conn){
 
 <!-- create user section start -->
 <section class="create-user">
-    <form action="<?= $_SERVER['PHP_SELF']?>" method="post">
+    <form action="<?= $_SERVER['PHP_SELF']?>" method="post" enctype="multipart/form-data">
         <div class="input-group">
             <label for="name">Name</label>
             <input type="text" name="name" id="name">
