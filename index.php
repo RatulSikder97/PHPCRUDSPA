@@ -1,3 +1,27 @@
+<?php
+
+$host = 'localhost';
+$db = "crud";
+$user = "root";
+$password = "";
+
+$conn = mysqli_connect($host,$user,$password,$db);
+
+if($conn){
+    echo "Successful";
+}
+
+
+
+// if(isset($_REQUEST['createUser'])){
+//     echo "here";
+//     $createQuery = "INSERT INTO user(`name`,`email`,`phone`,`image`) VALUES ('a','a','a','a')";
+//     mysqli_query($conn,$createQuery);
+// }
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +44,7 @@
 
 <!-- create user section start -->
 <section class="create-user">
-    <form action="$_SERVER['PHP_SELF']" method="post">
+    <form action="<?= $_SERVER['PHP_SELF']?>" method="post">
         <div class="input-group">
             <label for="name">Name</label>
             <input type="text" name="name" id="name">
@@ -40,7 +64,6 @@
             <label for="image">Image</label>
             <input type="file" name="image" id="image">
         </div>
-
         <input type="submit" name="createUser" value="Create">
     </form>
 </section>
